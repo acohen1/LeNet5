@@ -1,3 +1,5 @@
+BOX LINK FOR MODELS: [text](https://app.box.com/s/1djpq18pk2nfpwhiz3xdp6t5xhhz5e52)
+
 ## Note for TA Grader
 
 By default, running `test2.py` will use the MNIST dataset. If you have your own validation data to test this model against, please specify the `-ta` argument when running the module. For example:

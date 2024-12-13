@@ -1,5 +1,3 @@
-# main.py
-
 import os
 import torch
 import torch.nn as nn
@@ -247,4 +245,4 @@ if __name__ == "__main__":
     
     criterion = CustomLossEq9(j=0.1)
 
-    train_model(model, train_loader, test_loader, criterion, epochs=20, lr=0.001)
+    train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001)

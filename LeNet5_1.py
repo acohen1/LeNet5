@@ -7,7 +7,7 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from data import load_mnist_datasets
+from data5_1 import load_mnist_datasets
 
 # Check if CUDA is available
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -150,6 +150,19 @@ def evaluate(model, loader, criterion):
     accuracy = (correct / total) * 100 if total > 0 else 0
     return avg_loss, accuracy
 
+def compute_confusion_matrix(model, loader):
+    model.eval()
+    num_classes = 10
+    confusion_mat = np.zeros((num_classes, num_classes), dtype=int)
+    with torch.no_grad():
+        for inputs, labels in loader:
+            inputs, labels = inputs.to(device), labels.to(device)
+            outputs = model(inputs)
+            predicted = torch.argmin(outputs, dim=1)
+            for t, p in zip(labels.view(-1), predicted.view(-1)):
+                confusion_mat[t.item(), p.item()] += 1
+    return confusion_mat
+
 def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001):
     model.train()
 
@@ -209,8 +222,11 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
         'test_loss': test_loss_history,
         'test_accuracy': test_acc_history
     })
-    history_df.to_csv('training_history.csv', index=False)
-    print("Training history saved to training_history.csv")
+    history_df.to_csv('training_history5_1.csv', index=False)
+    print("Training history saved to training_history5_1.csv")
+
+    torch.save(model, "LeNet5_1.pth")
+    print("Model state dict saved to LeNet5_1.pth")
 
     plt.figure(figsize=(10,4))
     plt.subplot(1,2,1)
@@ -230,8 +246,18 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig('training_curves.png')
-    print("Training curves saved to training_curves.png")
+    plt.savefig('training_curves5_1.png')
+    print("Training curves saved to training_curves5_1.png")
+
+    # After training, compute confusion matrix on test set
+    confusion_mat = compute_confusion_matrix(model, test_loader)
+    confusion_df = pd.DataFrame(
+        confusion_mat,
+        index=[f"True_{i}" for i in range(10)],
+        columns=[f"Pred_{i}" for i in range(10)]
+    )
+    confusion_df.to_csv("confusion_matrix5_1.csv", index=True)
+    print("Confusion matrix saved to confusion_matrix5_1.csv")
 
 if __name__ == "__main__":
     # For input scaling, ensure the data loader uses the appropriate transform

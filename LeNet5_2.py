@@ -146,7 +146,6 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
     plt.savefig('training_curves5_2.png')
     print("Training curves saved to training_curves.png")
 
-    # After training, compute confusion matrix on test set
     confusion_mat = compute_confusion_matrix(model, test_loader)
     confusion_df = pd.DataFrame(
         confusion_mat,
@@ -157,9 +156,8 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
     print("Confusion matrix saved to confusion_matrix5_2.csv")
 
 if __name__ == "__main__":
-    train_loader, test_loader = load_mnist_datasets(batch_size=64)  # Increase batch size for stability
+    train_loader, test_loader = load_mnist_datasets(batch_size=64)
     model = ModernLeNet().to(device)
     criterion = nn.CrossEntropyLoss()
 
-    # Train with standard setup
     train_model(model, train_loader, test_loader, criterion, epochs=20, lr=0.01)

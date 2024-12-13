@@ -109,7 +109,7 @@ class CustomLossEq9(nn.Module):
         # outputs are the RBF penalties [N, C]
         # Following eq(9), we have:
         # E(W) = (1/P)*sum_p [ y_correct + log(e^{-j} + sum_i e^{-y_i}) ]
-        # We must exclude the correct class from the sum inside the log.
+        # We exclude the correct class from the sum inside the log term.
         batch_size = outputs.size(0)
         device = outputs.device
         j_tensor = self.j.to(device)
@@ -196,7 +196,6 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
                         param -= lr * param.grad
 
             total_loss += loss.item()
-            # Again, pick the class with smallest penalty as predicted class
             predicted = torch.argmin(outputs, dim=1)
             correct += (predicted == labels.long()).sum().item()
             total += labels.size(0)
@@ -249,7 +248,6 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
     plt.savefig('training_curves5_1.png')
     print("Training curves saved to training_curves5_1.png")
 
-    # After training, compute confusion matrix on test set
     confusion_mat = compute_confusion_matrix(model, test_loader)
     confusion_df = pd.DataFrame(
         confusion_mat,
@@ -260,9 +258,6 @@ def train_model(model, train_loader, test_loader, criterion, epochs=10, lr=0.001
     print("Confusion matrix saved to confusion_matrix5_1.csv")
 
 if __name__ == "__main__":
-    # For input scaling, ensure the data loader uses the appropriate transform
-    # If following the paper: background = -0.1, foreground = 1.175
-    # or keep [0,255], but then consider that the RBF prototypes are designed for [-1,1].
     train_loader, test_loader = load_mnist_datasets(batch_size=1)
 
     model = LeNet5().to(device)

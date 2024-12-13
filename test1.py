@@ -68,7 +68,7 @@ def main():
     mnist_test = MNIST(root='./MNIST_data', train=False, download=True, transform=transform)
     test_dataloader = DataLoader(mnist_test, batch_size=1, shuffle=False)
 
-    # Load the entire model. Ensure it was saved with torch.save(model, ...)
+    # Load the entire model
     model = torch.load("LeNet5_1.pth", map_location=device)
     model.to(device)
 

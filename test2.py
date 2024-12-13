@@ -67,10 +67,9 @@ class TADataset(Dataset):
         with open(label_file, "r") as f:
             lines = f.readlines()
 
-        # Each line contains only the label
         for i, line in enumerate(lines):
             lbl = int(line.strip())
-            fname = f"{i}.png"  # Construct the filename from the index
+            fname = f"{i}.png"
             self.images.append(fname)
             self.labels.append(lbl)
 

@@ -1,4 +1,4 @@
-BOX LINK FOR MODELS: [text](https://app.box.com/s/1djpq18pk2nfpwhiz3xdp6t5xhhz5e52)
+BOX LINK FOR MODELS: [Here](https://app.box.com/s/1djpq18pk2nfpwhiz3xdp6t5xhhz5e52)
 
 ## Note for TA Grader
 

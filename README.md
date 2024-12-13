@@ -10,17 +10,20 @@ py test2.py -ta Path/To/TA_test_data
 
 The test data directory structure should be similar to the data.zip provided by the professor in Canvas under hw_solutions:
 
+```
 TA_test_data/
    test/
        1.png
        2.png
        ...
    test_label.txt
+```
 
 ## RBF Parameters
 
 RBF parameters are initialized using a directory (from MNIST) called "digits_jpeg" structured as follows:
 
+```
 digits_jpeg/
     0/
         img001-000001.jpeg
@@ -32,3 +35,4 @@ digits_jpeg/
         ...
     2/
     ...
+```

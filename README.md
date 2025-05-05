@@ -1,38 +1,62 @@
-BOX LINK FOR MODELS: [Here](https://app.box.com/s/1djpq18pk2nfpwhiz3xdp6t5xhhz5e52)
+# Brain-Tumor MRI Classification ⚕️🧠
 
-## Note for TA Grader
+Two-stage LeNet-5 pipeline for detecting and classifying brain tumours from MRI scans.  
+Implements separate detection and classification models using PyTorch with visualized training results and confusion matrices.
 
-By default, running `test2.py` will use the MNIST dataset. If you have your own validation data to test this model against, please specify the `-ta` argument when running the module. For example:
+📄 [Project report](./Final_Report.pdf)
+🧪 Stages:  
+• Stage 1 — tumour vs. no tumour detection  
+• Stage 2 — 3-class tumour classification (glioma, meningioma, pituitary)
+
+---
+
+## 🚀 Getting Started
 
 ```bash
-py test2.py -ta Path/To/TA_test_data
+# Stage 1: Tumour Detection
+python test1.py      # uses data5_1.py + LeNet5_1.py
+
+# Stage 2: Tumour Classification
+python test2.py      # uses data5_2.py + LeNet5_2.py
 ```
 
-The test data directory structure should be similar to the data.zip provided by the professor in Canvas under hw_solutions:
+---
 
-```
-TA_test_data/
-   test/
-       1.png
-       2.png
-       ...
-   test_label.txt
-```
+## 📁 File Structure
 
-## RBF Parameters
+| File | Description |
+|------|-------------|
+| `data5_1.py` / `data5_2.py` | Data loading + transforms for each stage |
+| `LeNet5_1.py` / `LeNet5_2.py` | LeNet-style CNN architectures |
+| `test1.py` / `test2.py` | Training + evaluation scripts |
+| `LeNet5_1.pth` / `LeNet5_2.pth` | Saved PyTorch weights |
+| `training_history5_*.csv` | Accuracy/loss over epochs |
+| `confusion_matrix5_*.csv` | Final confusion matrices |
+| `training_curves5_*.png` | Plots for accuracy and loss |
+| `Final_Report.pdf` | Full write-up with results and discussion |
 
-RBF parameters are initialized using a directory (from MNIST) called "digits_jpeg" structured as follows:
+---
 
-```
-digits_jpeg/
-    0/
-        img001-000001.jpeg
-        img001-000002.jpeg
-        ...
-    1/
-        img002-000001.jpeg
-        img002-000002.jpeg
-        ...
-    2/
-    ...
-```
+## 📊 Results Summary
+
+| Stage | Accuracy |
+|-------|----------|
+| Detector (binary) | ~96% |
+| Classifier (3-way) | ~78% overall accuracy |
+
+Graphs and confusion matrices are available in the CSV/PNG outputs.
+
+---
+
+## 📌 Notes
+
+- This project follows a Kaggle-based CNN paper and reimplements the pipeline with slight architectural and preprocessing adjustments.
+- Datasets used are from public Kaggle sources (MRI scans of brain tumours).
+- Report is provided as a full PDF write-up (`Final_Report.pdf`).
+
+---
+
+## 📄 License
+
+For academic/research use only.  
+All dataset rights belong to their original Kaggle authors.
